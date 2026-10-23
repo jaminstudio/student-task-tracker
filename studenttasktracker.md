@@ -1,0 +1,1 @@
+this is my student task tracker git project. i'll show how i built the python app and used git from start to finish.                                                          a. i will start by creating my project folder and open in VS code 
