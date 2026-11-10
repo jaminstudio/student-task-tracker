@@ -4,7 +4,7 @@ Tasks = [
 ]
 
 Users = [
-
+    
 ]
 
 usernames = []
@@ -14,9 +14,9 @@ def login():
     password = input("Enter your Password")
 
     for user in Users:
-        if user.username == username and user.password == password:
-            print(f"Welcome {user.firstname} {user.lastname}")
-            return user.id
+        if user["username"] == username and user["password"] == password:
+            print(f"Welcome {user["firstname"]} {user["lastname"]}")
+            return user["id"]
 
     print("Username or Password incorrect")
     return None
@@ -52,18 +52,18 @@ def signup():
     lastname = input("Enter your Last Name")
     id = uuid.uuid4
     user = {
-        id:id,
-        username:username,
-        firstname:firstname,
-        lastname:lastname,
-        password:password,
+        "id":id,
+        "username":username,
+        "firstname":firstname,
+        "lastname":lastname,
+        "password":password,
     }
 
     usernames.append(username)
 
     Users.append(user)
 
-    return user[id]
+    return user["id"]
 
 def addTask(user_id):
     taskName = input("Enter task name")
@@ -93,14 +93,20 @@ def viewTasks(user_id):
     ]
 
     for task in Tasks:
-        if task["owner"] == user_id and task["completed"] == False:
+        if task["owner"] == user_id:
             userTasks.append(task)
 
-    for userTask in userTasks:
-        print("--------------------------------")
-        print(userTask["taskname"])
-        print(userTask["taskdesc"])
-        print("--------------------------------")
+    if len(userTasks) == 0:
+        print("===================")
+        print("No task to store")
+        print("===================")
+    else:
+        for userTask in userTasks:
+            print("--------------------------------")
+            print(userTask["taskname"])
+            print(userTask["taskdesc"])
+            print("Completed" if userTask["completed"] == True else "Not Completed")
+            print("--------------------------------")
 
 
 
@@ -110,7 +116,7 @@ def completeTask(user_id):
     ]
 
     for task in Tasks:
-        if task["owner"] == user_id:
+        if task["owner"] == user_id and task["completed"] == True:
             userTasks.append(task)
 
     i = 1
@@ -190,7 +196,8 @@ def main():
             case "4":
                 deleteTask
             case "5":
-                pass
+                user = None
+                main()
 
 if __name__ == "__main__":
     main()
